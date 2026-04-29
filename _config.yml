@@ -1,0 +1,43 @@
+# Jekyll Configuration
+title: Suryqata Art
+description: Suryqata Art - Original Artwork & Merchandise
+url: "https://suryqata.com"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+theme: minima
+
+exclude:
+  - .gitignore
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - server.js
+  - package.json
+  - package-lock.json
+
+include:
+  - _redirects
+
+collections:
+  artworks:
+    output: true
+    permalink: /artworks/:path/
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+# SEO and performance
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+social:
+  name: Suryqata Art
+  links:
+    - https://instagram.com/suryqata
