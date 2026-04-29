@@ -62,18 +62,14 @@ button {
     width: 1000px;
 }
 
-#mission,
-#contact {
-    background: var(--surface-white);
-}
-
 #contact {
     text-align: center;
 }
 
 #work {
-    background-color: #D61F26;
-    /*background-image: linear-gradient(-45deg, #ffffff 5%, #D61F26 60%);*/
+    /*background-color: #292929;*/
+    background-image: linear-gradient(135deg, #000000 0%, #D61F26 45%, #ffffff 100%);
+    border-radius: 24px;
 }
 
 #mission > *,
@@ -81,6 +77,45 @@ button {
 #contact > *{
     position: relative;
     z-index: 1;
+}
+
+.global-pencil-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.global-pencil {
+    position: absolute;
+    width: 200px;
+    height: auto;
+}
+
+.global-pencil-mission {
+    top: 460px;
+    right: 280px;
+    transform: rotate(18deg);
+}
+
+.global-triangle {
+    top: 1100px;
+    left: 1070px;
+    transform: rotate(-4deg);
+}
+
+.global-sheep {
+    position: absolute;
+    width: 180px;
+    top: 540px;
+    left: 160px;
+    transform: rotate(-15deg);
 }
 
 .contact-image {
@@ -91,6 +126,50 @@ button {
     margin-right: auto;
     display: block;
     border-radius: 24px;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.contact-stack {
+    position: relative;
+    display: inline-block;
+}
+
+.contact-link {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+.contact-arrow {
+    position: absolute;
+    width: 350px;
+    height: auto;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.contact-arrow-left {
+    top: 5%;
+    left: 12%;
+    transform: rotate(-120deg);
+}
+
+.contact-arrow-right {
+    top: 2%;
+    right: 13%;
+    transform: rotate(140deg);
+}
+
+.contact-link:focus-visible {
+    outline: 3px solid rgba(214, 31, 38, 0.5);
+    outline-offset: 4px;
+}
+
+.contact-link:hover .contact-image {
+    transform: translateY(-2px);
+    opacity: 0.90;
 }
 
 .my-work-text-image {
@@ -99,6 +178,18 @@ button {
     margin-bottom: auto;
     display: block;
     border-radius: 24px;
+    transform: rotate(-4deg);
+}
+
+.work-arrow {
+    position: absolute;
+    width: 60%;
+    transform: translate(-45%, -68%)
+    rotate(-12deg);
+    height: auto;
+    bottom: 16px;
+    right: 16px;
+    z-index: 2;
 }
 
 .work-image {
@@ -110,6 +201,7 @@ button {
     display: block;
     border-radius: 24px;
     transition: transform 0.3s ease, opacity 0.2s ease;
+    cursor: pointer;
 }
 
 .work-image:hover {
@@ -127,3 +219,83 @@ button {
     z-index: 0;
     border-radius: 24px;
 }
+
+.work-subtitle {
+    
+    margin-top: 38px;
+    color: rgba(255, 255, 255, 0.96);
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 8px 12px;
+    border: 2px solid rgba(255, 255, 255, 0.96);
+    border-radius: 14px;
+    transform: translate(5%, -25%) rotate(-12deg);
+}
+
+
+
+
+/* ── Mission overlap ── */
+.mission-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.mission-overlap {
+    position: relative;
+    display: inline-block;
+    margin-top: 24px;
+}
+
+.mission-skeleton {
+    display: block;
+    width: 400px;
+    height: auto;
+    position: relative;
+    z-index: 1;
+    border-radius: 30px;
+}
+
+.mission-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.mission-text-img {
+    width: 380px;
+    height: auto;
+    margin-left: 94px;
+    margin-top: 34px;
+    transform: rotate(8deg);
+    transform-origin: left top;
+}
+
+.mission-paragraph {
+    margin-top: 38px;
+    max-width: 40ch;
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    line-height: 1.7;
+    border: 2px solid var(--color-black);
+    border-radius: 16px;
+    padding: 16px 20px;
+    transform: rotate(3deg);
+    transform-origin: left top;
+}
+
+.mission-paragraph::before {
+    content: '\201C';
+}
+
+.mission-paragraph::after {
+    content: '\201D';
+}
+

@@ -31,7 +31,8 @@ function initializeGalleryFilters(galleryFilters, galleryCards) {
 }
 
 function initializePieceMagnifier() {
-	var artworkFrame = document.querySelector("#piece-detail .piece-image-artwork");
+	var artworkFrames = document.querySelectorAll("#piece-detail .piece-image-artwork");
+	var artworkFrame = artworkFrames.length > 0 ? artworkFrames[0] : null;
 	var artworkImage = artworkFrame ? artworkFrame.querySelector("img") : null;
 	var lens;
 	var lensSize = 150;
@@ -46,13 +47,29 @@ function initializePieceMagnifier() {
 	lens.setAttribute("aria-hidden", "true");
 	artworkFrame.appendChild(lens);
 
+	function getVisibleImage() {
+		var carousel = document.querySelector("#piece-detail .clothing-carousel");
+		if (carousel) {
+			var allSlides = carousel.querySelectorAll(".carousel-slide");
+			for (var i = 0; i < allSlides.length; i++) {
+				if (allSlides[i].style.display !== "none") {
+					var img = allSlides[i].querySelector("img");
+					if (img) return img;
+				}
+			}
+		}
+		return artworkImage;
+	}
+
 	function hideLens() {
 		lens.classList.remove("is-visible");
 	}
 
 	function updateLens(event) {
-		var renderedBounds = getRenderedImageBounds(artworkImage);
-		var frameRect = artworkFrame.getBoundingClientRect();
+		var currentImage = getVisibleImage();
+		var currentFrame = currentImage ? currentImage.closest(".piece-image-artwork") : artworkFrame;
+		var renderedBounds = getRenderedImageBounds(currentImage);
+		var frameRect = currentFrame.getBoundingClientRect();
 		var relativeX;
 		var relativeY;
 		var lensLeft;
@@ -80,7 +97,7 @@ function initializePieceMagnifier() {
 
 		lens.style.left = lensLeft + "px";
 		lens.style.top = lensTop + "px";
-		lens.style.backgroundImage = 'url("' + artworkImage.getAttribute("src") + '")';
+		lens.style.backgroundImage = 'url("' + currentImage.getAttribute("src") + '")';
 		lens.style.backgroundSize = renderedBounds.width * zoom + "px " + renderedBounds.height * zoom + "px";
 		lens.style.backgroundPosition = [
 			-relativeX * zoom + lensSize / 2 + "px",
@@ -89,10 +106,16 @@ function initializePieceMagnifier() {
 		lens.classList.add("is-visible");
 	}
 
-	artworkFrame.addEventListener("mouseenter", updateLens);
-	artworkFrame.addEventListener("mousemove", updateLens);
-	artworkFrame.addEventListener("mouseleave", hideLens);
-	artworkImage.addEventListener("load", hideLens);
+	// Attach events to all artwork frames for carousel support
+	artworkFrames.forEach(function(frame) {
+		frame.addEventListener("mouseenter", updateLens);
+		frame.addEventListener("mousemove", updateLens);
+		frame.addEventListener("mouseleave", hideLens);
+		var img = frame.querySelector("img");
+		if (img) {
+			img.addEventListener("load", hideLens);
+		}
+	});
 }
 
 function getRenderedImageBounds(image) {
